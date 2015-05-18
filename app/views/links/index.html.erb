@@ -5,8 +5,8 @@
       <small class="author">Submitted <%= time_ago_in_words(link.created_at) %> by <%= name_checker(link.user) %></small>
     </h2>
     
-    <div = "link comment count">
-      <%= link.comments.count %> comments
+    <div>
+      <%= link_to link.comments.count.to_s + " comments", link_path(link, :anchor => "comments") %>
     </div>
 
     <div class="btn-group">
