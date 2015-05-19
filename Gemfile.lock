@@ -48,6 +48,8 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.5.2)
+    foreman (0.78.0)
+      thor (~> 0.19.1)
     hike (1.2.3)
     i18n (0.7.0)
     jbuilder (2.2.13)
@@ -134,6 +136,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.2.0.2)
   coffee-rails (~> 4.0.0)
   devise (~> 3.3.0)
+  foreman
   jbuilder (~> 2.0)
   jquery-rails
   pg
