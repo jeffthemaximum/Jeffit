@@ -1,7 +1,7 @@
 <% @links.each do |link| %>
   <div class="link row clearfix">
     <h2>
-      <%= link_to link.title, link %><br>
+      <div id=<%= link.id.to_s %>><%= link_to link.title, link %><br></div>
       <small class="author">Submitted <%= time_ago_in_words(link.created_at) %> by <%= name_checker(link.user) %></small>
     </h2>
     
