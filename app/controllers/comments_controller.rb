@@ -1,12 +1,15 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
-
+  
   # POST /comments
   # POST /comments.json
   def create
     @link = Link.find(params[:link_id])
     @comment = @link.comments.new(comment_params)
     @comment.user = current_user
+    if @comment.user == nil
+      return redirect_to new_user_session_path, notice: 'You need to sign in or sign up before continuing.'
+    end
 
     respond_to do |format|
       if @comment.save
