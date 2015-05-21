@@ -10,7 +10,7 @@
     </div>
 
     <div class="btn-group">
-      <a class="btn btn-default btn-sm" href="<%= url_with_protocol(link.url) %>">Visit Link</a>
+      <a class="btn btn-default btn-sm" href="<%= url_with_protocol(link.url) %>", target="_blank">Visit Link</a>
       <%= link_to like_link_path(link), method: :put, class: "btn btn-default btn-sm" do %>
         <span class="glyphicon glyphicon-chevron-up"></span>
         Upvote
