@@ -4,7 +4,11 @@ class LinksController < ApplicationController
   # GET /links
   # GET /links.json
   def index
-    @links = Link.all.sort_by {|link| link.get_likes.size}.reverse
+    if params[:name]
+      @links = current_user.links
+    else
+      @links = Link.all.sort_by {|link| link.get_likes.size}.reverse
+    end
   end
 
   # GET /links/1
