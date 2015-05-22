@@ -9,10 +9,6 @@ Rails.application.routes.draw do
     end
     resources :comments
   end
-  
-  #allow users to view their links
-  get ':name' => 'links#index', as: 'user_links'
-  
   root "links#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
