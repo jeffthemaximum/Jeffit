@@ -4,7 +4,7 @@ class LinksController < ApplicationController
   # GET /links
   # GET /links.json
   def index
-    @links = Link.all.sort_by {|link| link.get_likes.size}.reverse
+      @links = Link.all.sort_by {|link| link.get_likes.size}.reverse
   end
 
   # GET /links/1
@@ -73,18 +73,6 @@ class LinksController < ApplicationController
     redirect_to links_path(:anchor => @link.id)
   end
 
-  def url_with_protocol(url)
-    /^http/i.match(url) ? url : "http://#{url}"
-  end
-
-  def name_checker(link_user)
-    if link_user == nil
-      "Deleted account :("
-    else
-      link_user.name
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_link
@@ -95,5 +83,4 @@ class LinksController < ApplicationController
     def link_params
       params.require(:link).permit(:title, :url)
     end
-    helper_method :url_with_protocol, :name_checker
 end

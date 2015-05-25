@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resources :comments
 
   devise_for :users
+  resources :users, :only => [:show]
+  
   resources :links do
     member do
       put "like", to:    "links#upvote"
@@ -9,6 +11,10 @@ Rails.application.routes.draw do
     end
     resources :comments
   end
+  
+  #route to user account page
+  match 'users/:id' => 'users#show', via: :get
+  
   root "links#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
