@@ -1,44 +1,93 @@
-<%= @user.name %>
-</br>
-total upvotes:
-<% total_upvotes = [] %>
-<% @user.links.each do |link| %>
-  <% total_upvotes << link.get_likes.size %>
-<% end %>
-<%= total_upvotes.inject{|sum,x| sum + x} %>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#aabcfe;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#669;background-color:#e8edff;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aabcfe;color:#039;background-color:#b9c9fe;}
+.tg .tg-s6z2{text-align:center}
+.tg .tg-vn4c{background-color:#D2E4FC}
+  
+.container {
+    margin:  30px auto;
+}
 
-<!-- This is copy/pasted from views/links/index.html.erb ... anyway to do this without copy/paste? -->
-<% @user.links.each do |link| %>
-  <div class="link row clearfix">
-    <h2>
-      <div id=<%= link.id.to_s %>><%= link_to link.title, link %><br></div>
-      <small class="author">Submitted <%= time_ago_in_words(link.created_at) %> by <%= name_checker(link.user) %></small>
-    </h2>
-    
-    <div>
-      <%= link_to link.comments.count.to_s + " comments", link_path(link, :anchor => "comments") %>
-    </div>
+.container > div {
 
-    <div class="btn-group">
-      <a class="btn btn-default btn-sm" href="<%= url_with_protocol(link.url) %>", target="_blank">Visit Link</a>
-      <%= link_to like_link_path(link), method: :put, class: "btn btn-default btn-sm" do %>
-        <span class="glyphicon glyphicon-chevron-up"></span>
-        Upvote
-        <%= link.get_upvotes.size %>
-      <% end %>
-      <%= link_to dislike_link_path(link), method: :put, class: "btn btn-default btn-sm" do %>
-        <span class="glyphicon glyphicon-chevron-down">
-        Downvote
-        <%= link.get_downvotes.size %>
-      <% end %>
-    </div>
-  <!-- This is copy/pasted from views/links/show.html.erb ... anyway to do this without copy/paste? -->
-      <% if @user == current_user -%>
-      <div class="btn-group">
-        <%= link_to 'Edit', edit_link_path(link), class: "btn btn-default" %>
-        <%= link_to 'Destroy', link, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
-      </div>
-    </div>
-  <% end %>
-<% end %>
+}
+.col1 {
+  padding-bottom: 50px;
+}
+.col2 {
 
+}
+</style>
+
+<div class="container"; margin-left: 0px;>
+    <div class="col1">
+		<div id="stat_table">
+			<h1 color=#777777>My Stats</h1>
+			  <table class="tg">
+			    <tr>
+			      <th class="tg-s6z2">Name</th>
+			      <th class="tg-031e">Total Upvotes</th>
+			      <th class="tg-031e">Total Downvotes</th>
+			      <th class="tg-031e">Highest Placed Link</th>
+			    </tr>
+			    <tr align="center">
+			      <td class="tg-vn4c"><%= @user.name %></td>
+			      <td class="tg-vn4c">
+			        <% total_upvotes = [] %>
+			        <% @user.links.each do |link| %>
+			          <% total_upvotes << link.get_likes.size %>
+			        <% end %>
+			        <%= total_upvotes.inject{|sum,x| sum + x} %>
+			      </td>
+			      <td class="tg-vn4c">
+			        <% total_downvotes = [] %>
+			        <% @user.links.each do |link| %>
+			        <% total_downvotes << link.get_dislikes.size %>
+			        <% end %>
+			        <%= total_downvotes.inject{|sum,x| sum + x} %>
+			      </td>
+			      <td class="tg-vn4c"><%= Link.all.sort_by {|link| link.get_likes.size}.reverse.find_index(@user.links.first) + 1  %></td>
+			    </tr>
+			  </table>
+		</div>
+	</div>
+    <div class="col2">
+		<h1>My Links</h1>
+			<% @user.links.each do |link| %>
+			    
+			    <h2>
+				<div class="link row clearfix">
+					<div id=<%= link.id.to_s %>><%= link_to link.title, link %>
+					<br>
+					</div>
+            		<small class="author">Submitted <%= time_ago_in_words(link.created_at) %> by <%= name_checker(link.user) %></small>
+          		</h2>
+
+				<div>
+            		<%= link_to link.comments.count.to_s + " comments", link_path(link, :anchor => "comments") %>
+          		</div>
+
+				<div class="btn-group">
+            		<a class="btn btn-default btn-sm" href="<%= url_with_protocol(link.url) %>", target="_blank">Visit Link</a>
+            		<%= link_to like_link_path(link), method: :put, class: "btn btn-default btn-sm" do %>
+	              		<span class="glyphicon glyphicon-chevron-up"></span>
+	              		Upvote
+	              		<%= link.get_upvotes.size %>
+            		<% end %>
+            		<%= link_to dislike_link_path(link), method: :put, class: "btn btn-default btn-sm" do %>
+              			<span class="glyphicon glyphicon-chevron-down">
+             			Downvote
+              			<%= link.get_downvotes.size %>
+            		<% end %>
+          		</div>
+
+				<% if @user == current_user -%>
+            		<div class="btn-group">
+              		<%= link_to 'Edit', edit_link_path(link), class: "btn btn-default" %>
+              		<%= link_to 'Destroy', link, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
+            		</div>
+            	<% end %>
+			<% end %>
+	</div>
+</div>
