@@ -12,18 +12,10 @@
 			    <tr align="center">
 			      <td class="tg-vn4c"><%= @user.name %></td>
 			      <td class="tg-vn4c">
-			        <% total_upvotes = [] %>
-			        <% @user.links.each do |link| %>
-			          <% total_upvotes << link.get_likes.size %>
-			        <% end %>
-			        <%= total_upvotes.inject{|sum,x| sum + x} %>
+              <%= total_votes(@user, "likes") %>
 			      </td>
 			      <td class="tg-vn4c">
-			        <% total_downvotes = [] %>
-			        <% @user.links.each do |link| %>
-			        <% total_downvotes << link.get_dislikes.size %>
-			        <% end %>
-			        <%= total_downvotes.inject{|sum,x| sum + x} %>
+              <%= total_votes(@user, "dislikes") %>
 			      </td>
 			      <td class="tg-vn4c"><%= Link.all.sort_by {|link| link.get_likes.size}.reverse.find_index(@user.links.first) + 1  %></td>
 			    </tr>

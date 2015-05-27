@@ -23,5 +23,22 @@ class ApplicationController < ActionController::Base
       link_user.name
     end
   end
-  helper_method :url_with_protocol, :name_checker
+  
+  #up_or_down_vote param must be either "likes" or "dislikes" according to acts_as_votable gem
+  def total_votes(user, like_status)
+    total_votes = []
+    if like_status == "likes"
+      user.links.each do |link|
+        total_votes << link.get_likes.size
+      end
+    end
+    if like_status == "dislikes"
+      user.links.each do |link|
+        total_votes << link.get_dislikes.size
+      end
+    end
+    total_votes.inject{|sum,x| sum + x}
+  end
+  
+  helper_method :url_with_protocol, :name_checker, :total_votes
 end
