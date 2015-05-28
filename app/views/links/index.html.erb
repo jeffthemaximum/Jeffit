@@ -7,6 +7,8 @@
     
     <div>
       <%= link_to link.comments.count.to_s + " comments", link_path(link, :anchor => "comments") %>
+      </br>
+      Total score: <%= (link.get_likes.size - link.get_dislikes.size) %>
     </div>
 
     <div class="btn-group">

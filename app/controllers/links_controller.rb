@@ -3,8 +3,13 @@ class LinksController < ApplicationController
   before_filter :authenticate_user!, except: [:index, :show]
   # GET /links
   # GET /links.json
+  
   def index
-      @links = Link.all.sort_by {|link| link.get_likes.size}.reverse
+    #algorithm for using upvotes-downvotes
+    @links = Link.all.sort_by {|link| (link.get_likes.size - link.get_dislikes.size)}.reverse
+    
+    #algorithm for just using upvotes
+    #@links = Link.all.sort_by {|link| link.get_likes.size}.reverse
   end
 
   # GET /links/1
