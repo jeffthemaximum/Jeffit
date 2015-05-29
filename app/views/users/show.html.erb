@@ -17,7 +17,7 @@
 			      <td class="tg-vn4c">
               <%= total_votes(@user, "dislikes") %>
 			      </td>
-			      <td class="tg-vn4c"><%= Link.all.sort_by {|link| link.get_likes.size}.reverse.find_index(@user.links.first) + 1  %></td>
+            <td class="tg-vn4c"><%= Link.all.sort_by {|link| (link.get_likes.size - link.get_dislikes.size)}.reverse.find_index(@user.links.first) + 1  %></td>
 			    </tr>
 			  </table>
 		</div>
